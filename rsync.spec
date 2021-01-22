@@ -1,5 +1,5 @@
 Name:           rsync
-Version:        3.2.1
+Version:        3.2.3
 Release:        1
 Summary:        Fast incremental file transfer utility
 License:        GPLv3+
@@ -18,6 +18,8 @@ Provides:       bundled(zlib) = 1.2.8 rsync-daemon
 Obsoletes:      rsync-daemon
 %{?systemd_requires}
 
+Patch1: backport-Work-around-glibc-lchmod-issue-a-better-way.patch
+
 %description
 Rsync is an open source utility that provides fast incremental file transfer.
 It uses the "rsync algorithm" which provides a very fast method for bringing
@@ -30,12 +32,10 @@ at one of the ends of the link beforehand.
 %prep
 %autosetup -b 1 -n %{name}-%{version} -p1
 
-patch -p1 -i patches/acls.diff
-patch -p1 -i patches/xattrs.diff
 patch -p1 -i patches/copy-devices.diff
 
 %build
-%configure -disable-xxhash
+%configure --disable-xxhash
 %make_build
 
 %check
@@ -79,6 +79,12 @@ install -D -m644 %{SOURCE6} %{buildroot}/%{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
 
 %changelog
+* Fri Jan 22 2021 yixiangzhike <zhangxingliang3@huawei.com> - 3.2.3-1
+- Type:requirement
+- ID:NA
+- SUG:NA
+- DESC:update to 3.2.3
+
 * Tue Jul 28 2020 Liquor <lirui130@huawei.com> - 3.2.1-1
 - Type:bugfix
 - ID:NA
