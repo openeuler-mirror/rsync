@@ -1,6 +1,6 @@
 Name:           rsync
 Version:        3.1.3
-Release:        6
+Release:        7
 Summary:        Fast incremental file transfer utility
 License:        GPLv3+
 URL:            http://rsync.samba.org/
@@ -32,6 +32,7 @@ Patch6009:      Fix-zlib-CVE-2016-9843.patch
 Patch6010:      Fix-bug-in-try_dests_reg-that-Florian-Zumbiehl-point.patch
 Patch6011:      Try-to-fix-the-iconv-crash-in-bug-11338.patch
 Patch6012:      CVE-2017-17433.patch
+Patch6013:      backport-Use-a-lock-to-not-fail-on-a-left-over-pid-file.patch 
 
 %description
 Rsync is an open source utility that provides fast incremental file transfer.
@@ -90,6 +91,12 @@ install -D -m644 %{SOURCE6} %{buildroot}/%{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
 
 %changelog
+* Mon Dec 20 2021 yangzhuangzhuang<yangzhuangzhuang1@huawei.com> - 3.1.3-7
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:Fix the issue that the pid file cannot be rewritten
+
 * Fri Sep 27 2019 chengquan<chengquan3@huawei.com> - 3.1.3-6
 - Type:bugfix
 - ID:NA
