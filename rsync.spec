@@ -1,6 +1,6 @@
 Name:           rsync
 Version:        3.1.3
-Release:        7
+Release:        8
 Summary:        Fast incremental file transfer utility
 License:        GPLv3+
 URL:            http://rsync.samba.org/
@@ -19,20 +19,22 @@ Obsoletes:      rsync-daemon
 
 Patch0:         rsync-man.patch
 Patch1:         rsync-noatime.patch
-Patch6000:      Avoid-a-compiler-error-warning-about-shifting-a-nega.patch
-Patch6001:      Need-to-mark-xattr-rules-in-get_rule_prefix.patch
-Patch6002:      Fix-itemizing-of-wrong-dir-name-on-some-iconv-transf.patch
-Patch6003:      Avoid-a-potential-out-of-bounds-read-in-daemon-mode-.patch
-Patch6004:      Avoid-leaving-a-file-open-on-error-return.patch
-Patch6005:      Fix-remove-source-files-sanity-check-w-copy-links-th.patch
-Patch6006:      Fix-zlib-CVE-2016-9840.patch
-Patch6007:      Fix-zlib-CVE-2016-9841.patch
-Patch6008:      Fix-zlib-CVE-2016-9842.patch
-Patch6009:      Fix-zlib-CVE-2016-9843.patch
-Patch6010:      Fix-bug-in-try_dests_reg-that-Florian-Zumbiehl-point.patch
-Patch6011:      Try-to-fix-the-iconv-crash-in-bug-11338.patch
-Patch6012:      CVE-2017-17433.patch
-Patch6013:      backport-Use-a-lock-to-not-fail-on-a-left-over-pid-file.patch
+Patch2:         Avoid-a-compiler-error-warning-about-shifting-a-nega.patch
+Patch3:         Need-to-mark-xattr-rules-in-get_rule_prefix.patch
+Patch4:         Fix-itemizing-of-wrong-dir-name-on-some-iconv-transf.patch
+Patch5:         Avoid-a-potential-out-of-bounds-read-in-daemon-mode-.patch
+Patch6:         Avoid-leaving-a-file-open-on-error-return.patch
+Patch7:         Fix-remove-source-files-sanity-check-w-copy-links-th.patch
+Patch8:         Fix-zlib-CVE-2016-9840.patch
+Patch9:         Fix-zlib-CVE-2016-9841.patch
+Patch10:        Fix-zlib-CVE-2016-9842.patch
+Patch11:        Fix-zlib-CVE-2016-9843.patch
+Patch12:        Fix-bug-in-try_dests_reg-that-Florian-Zumbiehl-point.patch
+Patch13:        Try-to-fix-the-iconv-crash-in-bug-11338.patch
+Patch14:        CVE-2017-17433.patch
+Patch15:        backport-Use-a-lock-to-not-fail-on-a-left-over-pid-file.patch
+Patch16:        backport-CVE-2022-37434.patch
+Patch17:        backport-A-fix-for-the-zlib-fix.patch
 
 %description
 Rsync is an open source utility that provides fast incremental file transfer.
@@ -91,6 +93,9 @@ install -D -m644 %{SOURCE6} %{buildroot}/%{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
 
 %changelog
+* Thu Aug 18 2022 fuanan <fuanan3@h-partners.com> - 3.1.3-8
+- Fix CVE-2022-37434
+
 * Mon Dec 20 2021 yangzhuangzhuang<yangzhuangzhuang1@huawei.com> - 3.1.3-7
 - Type:bugfix
 - ID:NA
