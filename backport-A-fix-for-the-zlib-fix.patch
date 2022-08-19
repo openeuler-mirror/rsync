@@ -1,0 +1,26 @@
+From 9e2921fce8c518e370c324407d35bc83ba12f2d5 Mon Sep 17 00:00:00 2001
+From: Wayne Davison <wayne@opencoder.net>
+Date: Mon, 8 Aug 2022 20:05:10 -0700
+Subject: [PATCH] A fix for the zlib fix.
+
+---
+ zlib/inflate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/zlib/inflate.c b/zlib/inflate.c
+index d15132ea..e9840b67 100644
+--- a/zlib/inflate.c
++++ b/zlib/inflate.c
+@@ -739,10 +739,10 @@ int flush;
+                 copy = state->length;
+                 if (copy > have) copy = have;
+                 if (copy) {
+-                    len = state->head->extra_len - state->length;
+                     if (state->head != Z_NULL &&
+                         state->head->extra != Z_NULL &&
+-                        len < state->head->extra_max) {
++                        (len = state->head->extra_len - state->length) <
++                            state->head->extra_max) {
+                         zmemcpy(state->head->extra + len, next,
+                                 len + copy > state->head->extra_max ?
+                                 state->head->extra_max - len : copy);

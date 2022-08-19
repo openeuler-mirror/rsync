@@ -1,6 +1,6 @@
 Name:           rsync
 Version:        3.2.3
-Release:        2
+Release:        3
 Summary:        Fast incremental file transfer utility
 License:        GPLv3+
 URL:            http://rsync.samba.org/
@@ -20,6 +20,8 @@ Obsoletes:      rsync-daemon
 
 Patch1: backport-Work-around-glibc-lchmod-issue-a-better-way.patch
 Patch2: backport-CVE-2020-14387-rsync-ssl-Verify-the-hostname-in-the-certificate-whe.patch
+Patch3: backport-CVE-2022-37434.patch
+Patch4: backport-A-fix-for-the-zlib-fix.patch
 
 %description
 Rsync is an open source utility that provides fast incremental file transfer.
@@ -80,9 +82,12 @@ install -D -m644 %{SOURCE6} %{buildroot}/%{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
 
 %changelog
+* Thu Aug 18 2022 fuanan <fuanan3@h-partners.com> - 3.2.3-3
+- Fix CVE-2022-37434
+
 * Fri Jun 18 2021 yangzhuangzhuang <yangzhuangzhuang1@huawei.com> - 3.2.3-2
-- Type:bugfix
-- ID:NA
+- Type:CVE
+- CVE:CVE-2020-14387
 - SUG:NA
 - DESC:Fix CVE-2020-14387
 
