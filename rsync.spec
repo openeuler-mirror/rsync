@@ -1,6 +1,6 @@
 Name:           rsync
 Version:        3.1.3
-Release:        8
+Release:        9
 Summary:        Fast incremental file transfer utility
 License:        GPLv3+
 URL:            http://rsync.samba.org/
@@ -31,10 +31,11 @@ Patch10:        Fix-zlib-CVE-2016-9842.patch
 Patch11:        Fix-zlib-CVE-2016-9843.patch
 Patch12:        Fix-bug-in-try_dests_reg-that-Florian-Zumbiehl-point.patch
 Patch13:        Try-to-fix-the-iconv-crash-in-bug-11338.patch
-Patch14:        CVE-2017-17433.patch
-Patch15:        backport-Use-a-lock-to-not-fail-on-a-left-over-pid-file.patch 
-Patch16:        backport-CVE-2022-37434.patch
-Patch17:        backport-A-fix-for-the-zlib-fix.patch
+Patch14:        backport-Use-a-lock-to-not-fail-on-a-left-over-pid-file.patch
+Patch15:        backport-CVE-2022-37434.patch
+Patch16:        backport-A-fix-for-the-zlib-fix.patch
+Patch17:        backport-rsync-noatime-2.patch
+Patch18:        backport-CVE-2022-29154.patch
 
 %description
 Rsync is an open source utility that provides fast incremental file transfer.
@@ -52,11 +53,13 @@ patch -p1 -i patches/acls.diff
 patch -p1 -i patches/xattrs.diff
 patch -p1 -i patches/copy-devices.diff
 
-chmod -x support/*
-
 %build
 %configure
 %make_build
+
+%check
+make check
+chmod -x support/*
 
 %install
 %make_install
@@ -93,6 +96,11 @@ install -D -m644 %{SOURCE6} %{buildroot}/%{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
 
 %changelog
+* Fri Aug 26 2022 panxiaohe <panxh.life@foxmail.com> - 3.1.3-9
+- enable make check
+- delete redundant patch and renew rsync-noatime.patch
+- fix CVE-2022-29154
+
 * Thu Aug 18 2022 fuanan <fuanan3@h-partners.com> - 3.1.3-8
 - Fix CVE-2022-37434
 
