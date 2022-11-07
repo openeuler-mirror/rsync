@@ -1,28 +1,21 @@
 Name:           rsync
-Version:        3.2.3
-Release:        4
+Version:        3.2.5
+Release:        1
 Summary:        Fast incremental file transfer utility
 License:        GPLv3+
 URL:            http://rsync.samba.org/
-Source0:        https://download.samba.org/pub/rsync/src/rsync-%{version}%{?prerelease}.tar.gz
-Source1:        https://download.samba.org/pub/rsync/src/rsync-patches-%{version}.tar.gz
-Source2:        rsyncd.socket
-Source3:        rsyncd.service
-Source4:        rsyncd.conf
-Source5:        rsyncd.sysconfig
-Source6:        rsyncd@.service
+Source0:        https://download.samba.org/pub/rsync/src/rsync-%{version}.tar.gz
+Source1:        rsyncd.socket
+Source2:        rsyncd.service
+Source3:        rsyncd.conf
+Source4:        rsyncd.sysconfig
+Source5:        rsyncd@.service
 
 BuildRequires:  git gcc systemd libacl-devel libattr-devel autoconf popt-devel
 BuildRequires:  lz4-devel openssl-devel libzstd-devel
 Provides:       bundled(zlib) = 1.2.8 rsync-daemon
 Obsoletes:      rsync-daemon
 %{?systemd_requires}
-
-Patch1: backport-Work-around-glibc-lchmod-issue-a-better-way.patch
-Patch2: backport-CVE-2020-14387-rsync-ssl-Verify-the-hostname-in-the-certificate-whe.patch
-Patch3: backport-CVE-2022-37434.patch
-Patch4: backport-A-fix-for-the-zlib-fix.patch
-Patch5: backport-CVE-2022-29154.patch
 
 %description
 Rsync is an open source utility that provides fast incremental file transfer.
@@ -34,9 +27,7 @@ at one of the ends of the link beforehand.
 %package_help
 
 %prep
-%autosetup -b 1 -n %{name}-%{version} -p1
-
-patch -p1 -i patches/copy-devices.diff
+%autosetup -n %{name}-%{version} -p1
 
 %build
 %configure --disable-xxhash
@@ -49,11 +40,11 @@ chmod -x support/*
 %install
 %make_install
 
-install -D -m644 %{SOURCE2} %{buildroot}/%{_unitdir}/rsyncd.socket
-install -D -m644 %{SOURCE3} %{buildroot}/%{_unitdir}/rsyncd.service
-install -D -m644 %{SOURCE4} %{buildroot}/%{_sysconfdir}/rsyncd.conf
-install -D -m644 %{SOURCE5} %{buildroot}/%{_sysconfdir}/sysconfig/rsyncd
-install -D -m644 %{SOURCE6} %{buildroot}/%{_unitdir}/rsyncd@.service
+install -D -m644 %{SOURCE1} %{buildroot}/%{_unitdir}/rsyncd.socket
+install -D -m644 %{SOURCE2} %{buildroot}/%{_unitdir}/rsyncd.service
+install -D -m644 %{SOURCE3} %{buildroot}/%{_sysconfdir}/rsyncd.conf
+install -D -m644 %{SOURCE4} %{buildroot}/%{_sysconfdir}/sysconfig/rsyncd
+install -D -m644 %{SOURCE5} %{buildroot}/%{_unitdir}/rsyncd@.service
 
 %pre
 
@@ -83,15 +74,13 @@ install -D -m644 %{SOURCE6} %{buildroot}/%{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
 
 %changelog
-* Fri Aug 26 2022 panxiaohe <panxh.life@foxmail.com> - 3.2.3-4
-- fix CVE-2022-29154
-
-* Thu Aug 18 2022 fuanan <fuanan3@h-partners.com> - 3.2.3-3
-- Fix CVE-2022-37434
+* Thu Aug 18 2022 fuanan <fuanan3@h-partners.com> - 3.2.5-1
+- Update version to 3.2.5
+- Fix CVE-2022-29154,CVE-2022-37434
 
 * Fri Jun 18 2021 yangzhuangzhuang <yangzhuangzhuang1@huawei.com> - 3.2.3-2
-- Type:CVE
-- CVE:CVE-2020-14387
+- Type:bugfix
+- ID:NA
 - SUG:NA
 - DESC:Fix CVE-2020-14387
 
