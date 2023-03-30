@@ -1,8 +1,8 @@
 Name:           rsync
-Version:        3.2.5
+Version:        3.2.7
 Release:        1
 Summary:        Fast incremental file transfer utility
-License:        GPLv3+
+License:        GPL-3.0-or-later
 URL:            http://rsync.samba.org/
 Source0:        https://download.samba.org/pub/rsync/src/rsync-%{version}.tar.gz
 Source1:        rsyncd.socket
@@ -24,7 +24,15 @@ remote files into sync. It does this by sending just the differences in the
 files across the link, without requiring that both sets of files are present
 at one of the ends of the link beforehand.
 
-%package_help
+%package help
+Summary:        Fast incremental file transfer utility
+Provides:	rsync-doc
+%description help
+Rsync is an open source utility that provides fast incremental file transfer.
+It uses the "rsync algorithm" which provides a very fast method for bringing
+remote files into sync. It does this by sending just the differences in the
+files across the link, without requiring that both sets of files are present
+at one of the ends of the link beforehand.
 
 %prep
 %autosetup -n %{name}-%{version} -p1
@@ -57,7 +65,7 @@ install -D -m644 %{SOURCE5} %{buildroot}/%{_unitdir}/rsyncd@.service
 %postun
 %systemd_postun_with_restart rsyncd.service
 
-%files
+%files -n rsync
 %defattr(-,root,root)
 %doc tech_report.tex
 %doc support/*
@@ -74,6 +82,9 @@ install -D -m644 %{SOURCE5} %{buildroot}/%{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
 
 %changelog
+* Tue Jan 31 2023 wangjunqi <wangjunqi@kylinos.cn> - 3.2.7-1
+- update version to 3.2.7
+
 * Thu Aug 18 2022 fuanan <fuanan3@h-partners.com> - 3.2.5-1
 - Update version to 3.2.5
 - Fix CVE-2022-29154,CVE-2022-37434
