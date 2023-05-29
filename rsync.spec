@@ -1,6 +1,6 @@
 Name:           rsync
 Version:        3.2.5
-Release:        1
+Release:        2
 Summary:        Fast incremental file transfer utility
 License:        GPLv3+
 URL:            http://rsync.samba.org/
@@ -30,6 +30,7 @@ at one of the ends of the link beforehand.
 %autosetup -n %{name}-%{version} -p1
 
 %build
+CFLAGS="%{optflags} -Wno-strict-prototypes"
 %configure --disable-xxhash
 %make_build
 
@@ -74,6 +75,9 @@ install -D -m644 %{SOURCE5} %{buildroot}/%{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
 
 %changelog
+* Wed May 10 2023 Xiaoya Huang <huangxiaoya@iscas.ac.cn> - 3.2.5-2
+- Fix clang building errors
+
 * Thu Aug 18 2022 fuanan <fuanan3@h-partners.com> - 3.2.5-1
 - Update version to 3.2.5
 - Fix CVE-2022-29154,CVE-2022-37434
